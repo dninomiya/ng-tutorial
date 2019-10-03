@@ -1,0 +1,7 @@
+<ul class="nav">
+  <li *ngFor="let item of items; let i = index">
+    <a href="{{item.url}}">
+      {{i + 1}} - {{item.label}}
+    </a>
+  </li>
+</ul>
