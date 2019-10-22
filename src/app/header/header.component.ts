@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +10,21 @@ export class HeaderComponent implements OnInit {
   @Input() title: string;
   @Output() clickAction = new EventEmitter<string>();
 
-  constructor() { }
+  user$ = this.authService.user$;
+
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
 
   login() {
-    this.clickAction.emit('クリックされました');
+    this.authService.login();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

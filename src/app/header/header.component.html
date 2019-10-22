@@ -3,7 +3,7 @@
     {{title}}
   </p>
   <div class="header__btns">
-    <button (click)="login()">ログイン</button>
-    <button>ログアウト</button>
+    <button *ngIf="!(user$ | async)" (click)="login()">ログイン</button>
+    <button *ngIf="(user$ | async)" (click)="logout()">ログアウト</button>
   </div>
 </div>
