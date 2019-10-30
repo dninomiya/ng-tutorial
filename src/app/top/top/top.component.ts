@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { LoginDialogComponent } from 'src/app/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-top',
@@ -16,9 +18,15 @@ export class TopComponent implements OnInit {
     likeIds: string[];
   };
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
+  }
+
+  openLoginDialog() {
+    this.dialog.open(LoginDialogComponent);
   }
 
 }

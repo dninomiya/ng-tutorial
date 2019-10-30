@@ -30,7 +30,7 @@ export class AuthService {
     authProvider.setCustomParameters({
       prompt: 'select_account'
     });
-    this.afAuth.auth.signInWithPopup(authProvider);
+    return this.afAuth.auth.signInWithPopup(authProvider);
   }
 
   logout() {

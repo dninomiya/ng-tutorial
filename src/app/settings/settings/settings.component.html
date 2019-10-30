@@ -1,1 +1,11 @@
-<p>ログインしている人だけが見れる</p>
+<div *ngIf="user$ | async as user; else blank">
+  <p>{{userId}}でログインしています。</p>
+  <p>{{user.name}}</p>
+  <img [src]="user.photoURL" alt="">
+  <p>作成日: {{user.createdAt.toDate() | date:'yyyy/MM/dd'}}</p>
+
+  <input type="file" (change)="updateAvatar($event)">
+</div>
+<ng-template #blank>
+  <p>{{userId}}は存在しませんでした。</p>
+</ng-template>

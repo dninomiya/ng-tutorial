@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsComponent
-  }
+  },
+  {
+    path: ':id',
+    component: SettingsComponent
+  },
 ];
 
 @NgModule({

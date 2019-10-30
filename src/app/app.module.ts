@@ -15,13 +15,15 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './login/login.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +36,9 @@ import { LoginComponent } from './login/login.component';
     SharedModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LoginDialogComponent
+  ]
 })
 export class AppModule { }
