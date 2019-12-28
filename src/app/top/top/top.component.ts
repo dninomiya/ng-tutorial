@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginDialogComponent } from 'src/app/login-dialog/login-dialog.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { DemoService } from 'src/app/demo.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-top',
@@ -9,6 +12,8 @@ import { LoginDialogComponent } from 'src/app/login-dialog/login-dialog.componen
 })
 export class TopComponent implements OnInit {
 
+  demo = this.demoService.demo;
+  user$ = this.authService.user$;
   user: {
     name: string;
     email: string;
@@ -18,9 +23,16 @@ export class TopComponent implements OnInit {
     likeIds: string[];
   };
 
+  posts$: any = this.db.collection(`posts`).valueChanges();
+
   constructor(
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private demoService: DemoService,
+    private db: AngularFirestore
+  ) {
+    this.authService.confirmEmailSignIn();
+  }
 
   ngOnInit() {
   }
@@ -29,4 +41,7 @@ export class TopComponent implements OnInit {
     this.dialog.open(LoginDialogComponent);
   }
 
+  setLog(uid: string) {
+    this.authService.setLastCheckId(uid);
+  }
 }

@@ -1,3 +1,12 @@
 <p>誰でも見れるトップコンポーネント</p>
 
+<p>{{demo}}</p>
+
+<ul>
+  <li *ngFor="let post of posts$ | async">
+    {{post.title}}
+  </li>
+</ul>
+
+<button *ngIf="user$ | async as user" (click)="setLog(user.id)">閲覧記録</button>
 <button color="primary" mat-raised-button (click)="openLoginDialog()">ログイン</button>

@@ -3,6 +3,12 @@
 
 <mat-dialog-content>
   <p>Googleアカウントでログインしてください。</p>
+
+  <p>メールログインの場合はこちら</p>
+  <mat-form-field>
+    <input type="email" matInput [formControl]="emailControl" autocomplete="email" required>
+  </mat-form-field>
+  <button [disabled]="emailControl.invalid" (click)="loginWithEmail(emailControl.value)" mat-raised-button color="primary">メールログイン</button>
 </mat-dialog-content>
 
 <mat-dialog-actions>

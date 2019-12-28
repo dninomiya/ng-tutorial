@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { MatDialogRef } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-dialog',
@@ -8,6 +9,8 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./login-dialog.component.scss']
 })
 export class LoginDialogComponent implements OnInit {
+
+  emailControl = new FormControl('', [Validators.required]);
 
   constructor(
     private authSerivice: AuthService,
@@ -21,6 +24,13 @@ export class LoginDialogComponent implements OnInit {
     this.authSerivice.login().then(() => {
       this.dialog.close();
     });
+  }
+
+  loginWithEmail(email: string) {
+    this.authSerivice.loginWithEmail(email)
+      .then(() => {
+        this.dialog.close();
+      });
   }
 
 }
