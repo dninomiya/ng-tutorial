@@ -1,0 +1,24 @@
+<article *ngIf="article">
+  <h1>{{ article.title }}</h1>
+  <p>
+    {{ article.body }}
+  </p>
+
+  <ng-container *ngIf="user$ | async as user">
+    <button
+      color="primary"
+      mat-icon-button
+      (click)="unlike(user.id)"
+      *ngIf="isLiked; else unlikeButton"
+    >
+      <mat-icon class="mat-18">favorite</mat-icon>
+    </button>
+
+    <ng-template #unlikeButton>
+      <button mat-icon-button (click)="like(user.id)" x>
+        <mat-icon class="mat-18">favorite_border</mat-icon>
+      </button>
+    </ng-template>
+  </ng-container>
+  {{ likeCount }}
+</article>

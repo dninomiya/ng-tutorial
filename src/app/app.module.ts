@@ -16,6 +16,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { ArticleComponent } from './article/article.component';
+import { MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,
@@ -33,12 +36,11 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    SharedModule
+    SharedModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [
-    LoginDialogComponent
-  ]
+  entryComponents: [LoginDialogComponent]
 })
-export class AppModule { }
+export class AppModule {}
