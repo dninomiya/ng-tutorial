@@ -1,6 +1,6 @@
 import { Article } from './../interfaces/article';
 import { AuthService } from 'src/app/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { ArticleService } from './../services/article.service';
@@ -15,21 +15,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class ArticleComponent implements OnInit, OnDestroy {
   article$ = this.route.paramMap.pipe(
-    switchMap(map => {
-      const id = map.get('id');
+    switchMap(paramMap => {
+      const id = paramMap.get('id');
       return this.articleService.getArticle(id);
     })
   );
+  user$ = this.authService.user$;
 
   article: Article;
   articleId: string;
   likeCount: number;
-  user$ = this.authService.user$;
   isLiked: boolean;
   sub = new Subscription();
+  uid: string;
   isLiked$ = combineLatest([this.article$, this.user$]).pipe(
     switchMap(([article, user]) => {
-      return this.likeService.isLiked(article.id, user.id);
+      if (user) {
+        return this.likeService.isLiked(article.id, user.id);
+      } else {
+        return of(false);
+      }
     })
   );
 
@@ -52,18 +57,28 @@ export class ArticleComponent implements OnInit, OnDestroy {
     );
 
     this.sub.add(this.isLiked$.subscribe(isLiked => (this.isLiked = isLiked)));
+
+    this.sub.add(this.user$.subscribe(user => (this.uid = user && user.id)));
   }
 
-  like(uid: string) {
-    this.isLiked = true;
-    this.likeCount++;
-    this.likeService.likeArticle(this.articleId, uid);
+  like() {
+    if (this.uid) {
+      this.isLiked = true;
+      this.likeCount++;
+      this.likeService.likeArticle(this.articleId, this.uid);
+    } else {
+      alert('ログインしてくださいダイアログ出す');
+    }
   }
 
   unlike(uid: string) {
-    this.isLiked = false;
-    this.likeCount--;
-    this.likeService.unLikeArticle(this.articleId, uid);
+    if (this.uid) {
+      this.isLiked = false;
+      this.likeCount--;
+      this.likeService.unLikeArticle(this.articleId, uid);
+    } else {
+      alert('ログインしてくださいダイアログ出す');
+    }
   }
 
   ngOnDestroy() {
