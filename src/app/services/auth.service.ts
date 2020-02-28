@@ -9,7 +9,6 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
   user$ = this.afAuth.authState.pipe(
     switchMap(state => {
       if (state) {
@@ -17,14 +16,10 @@ export class AuthService {
       } else {
         return of(null);
       }
-    }),
-    tap(user => console.log(user))
+    })
   );
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private db: AngularFirestore,
-  ) { }
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {}
 
   login() {
     const authProvider = new auth.GoogleAuthProvider();
@@ -35,16 +30,17 @@ export class AuthService {
   }
 
   loginWithEmail(email: string) {
-    return this.afAuth.auth.sendSignInLinkToEmail(email, {
-      url: 'http://localhost:4200',
-      handleCodeInApp: true
-    })
-    .then(() => {
-      window.localStorage.setItem('emailForSignIn', email);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    return this.afAuth.auth
+      .sendSignInLinkToEmail(email, {
+        url: 'http://localhost:4200',
+        handleCodeInApp: true
+      })
+      .then(() => {
+        window.localStorage.setItem('emailForSignIn', email);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   logout() {
@@ -57,12 +53,13 @@ export class AuthService {
       if (!email) {
         email = window.prompt('Please provide your email for confirmation');
       }
-      this.afAuth.auth.signInWithEmailLink(email, window.location.href)
-        .then((result) => {
+      this.afAuth.auth
+        .signInWithEmailLink(email, window.location.href)
+        .then(result => {
           alert('ログインに成功しました');
           window.localStorage.removeItem('emailForSignIn');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
